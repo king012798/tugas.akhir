@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ProdukController;
 
 Route::get('/', [AuthController::class, 'ShowFormLogin'])->name('login');
 Route::get('login', [AuthController::class, 'ShowFormLogin'])->name('login');
@@ -19,3 +20,5 @@ Route::group(['midllware' => 'auth'], function () {
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::resource('produk',ProdukController::class);
