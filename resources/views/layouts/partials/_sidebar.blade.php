@@ -25,7 +25,12 @@
                     <span>Produk</span>
                 </a>
             </li>
-
+            <li>
+                <a href="{{ route('penjualan.index') }}">
+                    <i class="fas fa-dolly-flatbed"></i>
+                    <span>Penjualan</span>
+                </a>
+            </li>
         </ul>
     </div>
     <!-- #Menu -->

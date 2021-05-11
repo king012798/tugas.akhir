@@ -7,6 +7,7 @@
     <meta content="width=device-width, initial-scale=1" name="viewport" />
     <title>@yield('title')</title>
     @include('layouts.partials._link')
+    @livewireStyles
 </head>
 
 <body class="light">
@@ -34,7 +35,9 @@
     <section class="content">
         <div class="container-fluid">
             @yield('content')
+            {{ isset($slot) ? $slot : null }}
         </div>
     </section>
     @include('layouts.partials._script')
+    @livewireScripts
 </body>
