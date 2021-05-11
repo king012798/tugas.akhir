@@ -7,12 +7,27 @@ use App\Models\Produk;
 use Darryldecode\Cart\CartCondition;
 use Cart as ShoppingCart;
 use Carbon\Carbon;
+use Livewire\WithPagination;
+use App\Models\Order as OrderModel;
+use App\Models\DetailPenjualan;
 
 class Order extends Component
 {
+    use WithPagination;
+
+    protected $paginationTheme = 'bootstrap';
+
+    public $search = '';
+
+    public $bayar, $kembalian;
+
+    public function updatingSearch(){
+        $this->resetPage();
+    }
+
     public function render()
     {
-        $data_produk = Produk::all();
+        $data_produk = Produk::where('nama', 'like', '%'.$this->search.'%')->orderBy('created_at', 'DESC')->paginate(4);
 
         $items = ShoppingCart::session(Auth()->id())->getContent()->sortBy(function($cart){
             return $cart->attributes->get('added_at');
@@ -113,4 +128,55 @@ class Order extends Component
         }
     }
 
+    public function checkOut(){
+        $carts = ShoppingCart::session(Auth()->id())->getContent();
+        $hargaTotal = ShoppingCart::session(Auth()->id())->getTotal();
+        
+        $now = date('Y');
+        $code = 1;
+        $orders = \DB::table('orders')->latest('id')->first();
+        $year = substr(now()->format('Y'), 2);
+        
+        if($orders != null){
+            $orderYears = substr($orders->kode_penjualan,2,2);
+            if($year > $orderYears){
+                $code = 1;
+            }else{
+                $code = substr($orders->kode_penjualan, 4)+1;
+                
+            }
+        }
+
+        $code_order = str_pad(000 + $code , 3, 0, STR_PAD_LEFT);
+        $getCode = "JL".$year.$code_order;
+
+        $orders = OrderModel::create([
+            'kode_penjualan' => $getCode,
+            'total_harga' => $hargaTotal,
+            'pembayaran' => $this->bayar,
+            'kembalian' => $this->kembalian,
+            'tanggal_penjualan' => Carbon::now()->format('Y-m-d'),
+        ]);
+
+        foreach($carts as $index => $cart){
+            DetailPenjualan::create([
+                'id_penjualan' => $orders->id,
+                'id_produk' => substr($cart['id'],4,5),
+                'harga_produk' => $cart['price'],
+                'qty' => $cart['quantity']
+            ]);
+            ShoppingCart::session(Auth()->id())->remove($cart['id']);
+        }
+
+        
+
+        $this->bayar = 0;
+        $this->kembalian = 0;
+    }
+
+    public function totalPembayaran($totalHarga){
+        $kembalian = $this->bayar - $totalHarga;
+        $this->kembalian = $kembalian;
+        // dd($totalPembayaran);
+    }
 }

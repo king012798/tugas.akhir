@@ -27,7 +27,11 @@
                             <h2>Daftar Produk</h2>
                         </div>
                         <div class="body">
+                            <div class="ml-auto col-md-4">
+                                <input type="text" wire:model="search" placeholder="Cari Produk..." class="form-control">
+                            </div>
                             <div class="row">
+                                
                                 @forelse ($data_produk as $produk)
                                 <div class="col-md-3 col-sm-6">
                                     <div class="product-grid rounded">
@@ -56,6 +60,9 @@
                                 @endforelse
                                 
                             </div>
+                            <div class="text-center">
+                                {{ $data_produk->links() }}
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -72,14 +79,16 @@
                                         <th>Nama</th>
                                         <th>QTY</th>
                                         <th>Price</th>
-                                        <th width="2%">#</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @forelse ($carts as $index => $cart)
                                         <tr>
-                                            <td>{{ $index + 1 }}</td>
-                                            <td>{{ $cart['name'] }}</td>
+                                            <td>{{ $index + 1 }} <br> <span wire:click="removeItem('{{ $cart['rowId'] }}')" class=""><i class="fas fa-trash"></i></span></td>
+                                            <td>
+                                                {{ $cart['name'] }} <br>
+                                                {{ number_format($cart['price'],0,'','.') }}
+                                            </td>
                                             <td>
                                                 <button wire:click="increaseItem('{{$cart['rowId']}}')" class="btn btn-warning btn-sm">+</button>
                                                 &nbsp;
@@ -87,20 +96,32 @@
                                                 &nbsp;
                                                 <button wire:click="decreaseItem('{{$cart['rowId']}}')" class="btn btn-danger btn-sm">-</button>
                                             </td>
-                                            <td class="text-right">{{ number_format($cart['price'],0,'','.') }}</td>
-                                            <td>
-                                                <button wire:click="removeItem('{{ $cart['rowId'] }}')" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button>
-                                            </td>
+                                            <td class="text-right">{{ number_format($cart['hargaTotal'],0,'','.') }}</td>
                                         </tr>
                                     @empty
                                         <tr>
-                                            <td colspan="5">
+                                            <td colspan="4">
                                                 <h6 class="text-center">Empty Cart</h6>
                                             </td>
                                         </tr>
                                     @endforelse
                                 </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td colspan="3" class="text-center font-weight-bold">TOTAL</td>
+                                        <td class="text-right font-weight-bold">{{ number_format($summary['total'],0,'','.') }}</td>
+                                    </tr>
+                                </tfoot>
                             </table>
+                            <div class="col-md-6 ml-auto text-right">
+                                <h6>BAYAR</h6> 
+                                <input type="number" wire:model="bayar" wire:keydown.ENTER="totalPembayaran({{$summary['total']}})" style="width: 100px; text-align: right;">
+                            </div>
+                            <div class="col-md-6 ml-auto text-right">
+                                <h6>KEMBALIAN</h6> 
+                                <h6>{{ number_format($kembalian,0,'','.') }}</h6> 
+                            </div>
+                            <button class="btn btn-primary btn-block" wire:click="checkOut">Checkout</button>
                         </div>
                     </div>
                 </div>
