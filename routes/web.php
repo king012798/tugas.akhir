@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProdukController;
+use App\Http\Controllers\PembelianController;
 use App\Http\Livewire\Order;
 
 Route::get('/', [AuthController::class, 'ShowFormLogin'])->name('login');
@@ -19,6 +20,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('produk',ProdukController::class);
 
     Route::get('penjualan', Order::class)->name('penjualan.index');
+
+    Route::resource('pembelian', PembelianController::class);
     
 });
 

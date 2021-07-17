@@ -26,7 +26,7 @@
                 </li>
                 <!-- #END# Full Screen Button -->
                 <!-- #START# Notifications-->
-                <li class="dropdown">
+                {{-- <li class="dropdown">
                     <a href="#" onClick="return false;" class="dropdown-toggle" data-toggle="dropdown" role="button">
                         <i class="far fa-bell"></i>
                         <span class="label-count bg-orange"></span>
@@ -139,9 +139,9 @@
                             <a href="#" onClick="return false;">View All Notifications</a>
                         </li>
                     </ul>
-                </li>
+                </li> --}}
                 <!-- #END# Notifications-->
-                <li class="dropdown user_profile">
+                {{-- <li class="dropdown user_profile">
                     <a href="#" onClick="return false;" class="dropdown-toggle" data-toggle="dropdown" role="button">
                         <img src="assets/images/user.jpg" width="32" height="32" alt="User">
                     </a>
@@ -171,7 +171,7 @@
                             </ul>
                         </li>
                     </ul>
-                </li>
+                </li> --}}
                 <!-- #END# Tasks -->
                 <li class="pull-right">
                     <a href="#" onClick="return false;" class="js-right-sidebar" data-close="true">

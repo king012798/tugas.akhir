@@ -31,6 +31,12 @@
                     <span>Penjualan</span>
                 </a>
             </li>
+            <li>
+                <a href="{{ route('pembelian.index') }}">
+                    <i class="fas fa-dolly-flatbed"></i>
+                    <span>Pembelian</span>
+                </a>
+            </li>
         </ul>
     </div>
     <!-- #Menu -->

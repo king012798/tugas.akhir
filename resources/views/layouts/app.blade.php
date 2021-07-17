@@ -40,4 +40,5 @@
     </section>
     @include('layouts.partials._script')
     @livewireScripts
+    @yield('script')
 </body>

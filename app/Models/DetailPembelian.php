@@ -6,13 +6,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Pembelian;
 
-class Produk extends Model
+class DetailPembelian extends Model
 {
     use HasFactory;
 
     protected $guarded = [];
 
     public function pembelian(){
-        return $this->hasMany(Pembelian::class,'id_produk');
+        return $this->belongsTo(Pembelian::class, 'id_pembelian');
     }
 }

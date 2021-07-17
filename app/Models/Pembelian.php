@@ -4,15 +4,16 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Pembelian;
 
-class Produk extends Model
+class Pembelian extends Model
 {
     use HasFactory;
 
     protected $guarded = [];
 
-    public function pembelian(){
-        return $this->hasMany(Pembelian::class,'id_produk');
+    public function produk()
+    {
+        return $this->belongsTo(produk::class,'id_produk');
     }
+
 }

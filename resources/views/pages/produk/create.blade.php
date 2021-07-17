@@ -14,7 +14,7 @@ Tambah Produk
                     <a href="index.html">
                         <i class="fas fa-home"></i> Produk</a>
                 </li>
-                <li class="breadcrumb-item active">Tambah Produk</li>
+                {{-- <li class="breadcrumb-item active">Tambah Produk</li>
             </ul>
         </div>
     </div>
@@ -51,5 +51,5 @@ Tambah Produk
             </div>
         </div>
     </div>
-</div>
+</div> --}}
 @endsection

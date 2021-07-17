@@ -24,7 +24,7 @@ Produk
         <div class="card">
             <div class="header">
                 <h2><strong>Tabel</strong> Produk</h2>
-                <a href="{{ route('produk.create') }}" class="btn bg-blue waves-effect">Tambah</a>
+                {{-- <a href="{{ route('produk.create') }}" class="btn bg-blue waves-effect">Tambah</a> --}}
             </div>
             <div class="body">
                 <div class="table-responsive">
